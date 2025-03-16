@@ -21,19 +21,28 @@ async function getsongs() {
   return songs;
 }
 
+const playMusic = (track)=>{
+let audio = new Audio("/songs/"+track);
+audio.play();
+}
+
 async function main() {
+  let currentSong;
+
   //getting the songs
   let audio_files = await getsongs();
   //console.log(audio_files);
 
-  let songUL = document.querySelector(".songsList").getElementsByTagName("ul")[0];
-
+  let songUL = document
+    .querySelector(".songsList")
+    .getElementsByTagName("ul")[0];
   for (const song of audio_files) {
-    songUL.innerHTML = songUL.innerHTML + 
-    `                            <li>
+    songUL.innerHTML =
+      songUL.innerHTML +
+      `                            <li>
                                 <img class="invert" src="assets/music.svg" alt="musiclogo" srcset="">
                                 <div class="songinfo">
-                                    <div>${song.replaceAll("%20"," ")}</div>
+                                    <div>${song.replaceAll("%20", " ")}</div>
                                     <div>Ghanshyam</div>
                                 </div>
                                 <div class="playnow">
@@ -42,13 +51,22 @@ async function main() {
                                 </div>
                             </li>`;
   }
-//   playing the first song
-//   var audio = new Audio(audio_files[0]);
-//   audio.play();
-//   audio.addEventListener("loadeddata", () => {
-//     let duration = audio.duration;
-//     //console.log(duration);
-//     //duration of the song
-//   });
-} 
+  //   playing the first song
+  //   var audio = new Audio(audio_files[0]);
+  //   audio.play();
+  //   audio.addEventListener("loadeddata", () => {
+  //     let duration = audio.duration;
+  //     //console.log(duration);
+  //     //duration of the song
+  //   });
+
+  //attach event listener to all songs
+  Array.from(document.querySelector(".songsList").getElementsByTagName("li")).forEach(e=>{
+      //console.log(e.querySelector(".songinfo").children[0].innerText);
+        e.addEventListener("click", elements =>{
+            //console.log(e.querySelector(".songinfo").firstElementChild.innerHTML);
+            playMusic(e.querySelector(".songinfo").firstElementChild.innerHTML.trim());
+        });
+});
+}
 main();
