@@ -1,216 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify-Clone Ghanshyam</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="utility.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="assets/Spotify_icon.svg">
 
-<body>
-    <div class="container flex bg-black">
-        <div class="left">
-            <div class="home rounded bg-gray m-1 p-1">
-                <div class="logo"><img class="invert imgsize" src="assets/logo.svg" alt="spotifylogo" srcset=""></div>
-                <ul>
-                    <li><img class="invert imgsize" src="assets/homelogo.svg" alt="home" srcset="">Home</li>
-                    <li><img class="invert imgsize" src="assets/search.svg" alt="search" srcset="">Search</li>
-                </ul>
-            </div>
-            <div class="library rounded bg-gray m-1 p-1">
-                <div class="heading">
-                    <img class="invert" style="height: 20px; padding-top: 2px;" src="assets/library.svg" alt="library"
-                        srcset="" />
-                    <p>Your Library</p>
-                </div>
-                <div class="footer">
-                    <div><a href="https://www.spotify.com/jp/legal/"><span>Legal</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/privacy/"><span>Privacy Center</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/"><span>Privacy Policy</span></a>
-                    </div>
-                    <div><a href="https://www.spotify.com/jp/legal/cookies-policy/"><span>Cookies</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/#s3"><span>About Ads</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/accessibility/"><span>Accessibility</span></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="right rounded bg-gray m-1 p-1">
-            <div class="header rounded bg-head m-1 p-1">
-                <div class="nav">
-                    <div class="cont">
-                        <img class="invert" src="assets/leftbutton.svg" alt="previous" srcset="">
-                        <img class="invert" src="assets/rightbutton.svg" alt="next" srcset="">
-                    </div>
-                </div>
-                <div class="searchbar">
-                    <input type="text" placeholder="Search for Artists, Songs, or Podcasts">
-                </div>
-                <div class="buttons">
-                    <button>SignUp</button>
-                    <button>Login</button>
-                </div>
-            </div>
-            <div class="spotifyPlaylists bg-gray m-1">
-                <h3>Spotify Playlists</h3>
-                <div class="cardContainer">
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                    <div class="card">
-                        <div class="playbutton">
-                            <img src="assets/play.svg" alt="playbutton" srcset="">
-                        </div>
-                        <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
-                        <h4>Happy Ghanshyam!!</h4>
-                        <p>Something about playlist</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script src="script.js"></script>
-</body>
+        <title>Spotify-Clone Ghanshyam</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="utility.css">
+    </head>
 
-</html>
+    <body>
+        <div class="container flex bg-black">
+            <div class="left">
+                <div class="home rounded bg-gray m-1 p-1">
+                    <div class="logo"><img class="invert imgsize" src="assets/logo.svg" alt="spotifylogo" srcset=""></div>
+                    <ul>
+                        <li><img class="invert imgsize" src="assets/homelogo.svg" alt="home" srcset="">Home</li>
+                        <li><img class="invert imgsize" src="assets/search.svg" alt="search" srcset="">Search</li>
+                    </ul>
+                </div>
+                <div class="library rounded bg-gray m-1 p-1">
+                    <div class="heading">
+                        <img class="invert" style="height: 20px; padding-top: 2px;" src="assets/library.svg" alt="library"
+                            srcset="" />
+                        <p>Your Library</p>
+                    </div>
+                    <div class="songsList">
+                        <ul>
+                            <li>
+                                <img class="invert" src="assets/music.svg" alt="musiclogo" srcset="">
+                                <div class="songinfo">
+                                    <div>song Name</div>
+                                    <div>song Artist</div>
+                                </div>
+                                <div class="playnow">
+                                    <span>Play Now</span>
+                                    <img class="invert" src="assets/play.png" alt="playbut" srcset="">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer">
+                        <div><a href="https://www.spotify.com/jp/legal/"><span>Legal</span></a></div>
+                        <div><a href="https://www.spotify.com/jp/privacy/"><span>Privacy Center</span></a></div>
+                        <div><a href="https://www.spotify.com/jp/legal/privacy-policy/"><span>Privacy Policy</span></a>
+                        </div>
+                        <div><a href="https://www.spotify.com/jp/legal/cookies-policy/"><span>Cookies</span></a></div>
+                        <div><a href="https://www.spotify.com/jp/legal/privacy-policy/#s3"><span>About Ads</span></a></div>
+                        <div><a href="https://www.spotify.com/jp/accessibility/"><span>Accessibility</span></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="right rounded bg-gray m-1 p-1">
+                <div class="header rounded bg-head m-1 p-1">
+                    <div class="nav">
+                        <div class="cont">
+                            <img class="invert" src="assets/leftbutton.svg" alt="previous" srcset="">
+                            <img class="invert" src="assets/rightbutton.svg" alt="next" srcset="">
+                        </div>
+                    </div>
+                    <div class="searchbar">
+                        <input type="text" placeholder="Search for Artists, Songs, or Podcasts">
+                    </div>
+                    <div class="buttons">
+                        <button class="signupbtn">Sign Up</button>
+                        <button class="loginbtn">Login</button>
+                    </div>
+                </div>
+                <div class="spotifyPlaylists bg-gray m-1">
+                    <h3>Spotify Playlists</h3>
+                    <div class="cardContainer">
+                        <div class="card">
+                            <div class="playbutton">
+                                <img src="assets/play.svg" alt="playbutton" srcset="">
+                            </div>
+                            <img src="assets/heyjawani.jpg" alt="heyjawani" srcset="">
+                            <h4>Happy Ghanshyam!!</h4>
+                            <p>Something about playlist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="playbar">
+                    <div class="seekbar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="songinfo">
+
+                    </div>
+                    <div class="songbuttons">
+                        <img src="assets/previous.png" alt="previousbutton" srcset="">
+                        <img src="assets/play.png" alt="playbutton" srcset="">
+                        <img src="assets/next.png" alt="nextbutton" srcset="">
+                    </div>
+                </div>
+                <div class="timer">
+
+                </div>
+            </div>
+            <script src="script.js"></script>
+    </body>
+
+    </html>

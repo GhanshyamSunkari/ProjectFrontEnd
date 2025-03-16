@@ -21,6 +21,7 @@ body {
 }
 .right {
   width: 75vw;
+  position: relative;
   /* padding: 5px 0px; */
 }
 
@@ -64,6 +65,7 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header > * {
@@ -101,4 +103,128 @@ body {
   opacity: 0;
   transition: all 1s ease-out;
   top: 220px;
+}
+
+.signupbtn {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+.signupbtn:hover {
+  color: black;
+  background: white;
+}
+
+.loginbtn {
+  background: #1db954;
+  color: black;
+}
+
+.loginbtn:hover {
+  background: #1ed760;
+}
+
+.cont img {
+  width: 20px;
+  height: 20px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.cont img:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.searchbar {
+  display: flex;
+  background-color: #242424;
+  padding: 8px 15px;
+  border-radius: 20px;
+  width: 300px;
+  height: 20px;
+}
+
+.searchbar input {
+  width: 100%;
+  padding: 0px 0px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 14px;
+}
+
+.searchbar input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.searchbar:hover {
+  background-color: #2a2a2a;
+}
+
+.playbar {
+    position: fixed;
+    bottom: 10px;
+    margin: 0px 25px;
+    width: 70%;
+    border-radius: 20px;
+    background-color: #7c7c7ce0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px; 
+}
+
+.songbuttons {
+    display: flex;
+    align-items: center;  
+    gap: 10px;  }
+
+.playbar img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: block;
+}
+
+.songsList{
+    height: 50vh;
+    overflow-y: scroll;
+}
+.songsList .songinfo{
+    font-size: 8px;
+    width: 165px;
+}
+.songsList ul {
+    padding-left: 5px;
+    margin-left: 0; 
+    overflow-x: hidden; 
+}
+
+.songsList ul li{
+    list-style-type: decimal;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 12px 5px;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 5px 0px;
+}
+
+.songsList ul li img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: block;
+}
+
+.playnow{
+    display: flex;
+    font-size: 10px;
+    align-items: center;
+    gap: 10px;
 }
