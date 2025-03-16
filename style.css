@@ -13,7 +13,6 @@ body {
 
 .logo {
   width: 100px;
-  z-index: 10;
 }
 
 .left {
@@ -76,9 +75,11 @@ body {
   flex-wrap: wrap;
   padding: 10px;
   margin: 5px;
+  max-height: 80vh;
+  overflow-y: scroll;
 }
 .card {
-  width: 150px;
+  width: 143px;
   border-radius: 5px;
   padding: 10px;
   background-color: rgb(13, 14, 13);
