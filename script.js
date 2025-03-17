@@ -140,6 +140,7 @@ async function main() {
       playMusic(audio_files[currentIndex-1]);
     }
   });
+  // Add event listener to the next button
 
   next.addEventListener("click", () => {
     currentIndex = audio_files.indexOf(currentSong.src.split("/songs/")[1]);
@@ -150,5 +151,11 @@ async function main() {
       playMusic(audio_files[currentIndex]);
     }
   });
+
+  //Add an event to the range input to control volume
+  document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change",(e)=>{
+    console.log("Setting Volume to " + e.target.value + " / 100");
+    currentSong.volume = parseInt(e.target.value)/100;
+  })
 }
 main();
