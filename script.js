@@ -1,6 +1,6 @@
 // console.log("Hello, world!");
 let currentSong = new Audio();
-
+let audio_files = [];
 //get the songs from the server and return the array of songs
 async function getsongs() {
   let response = await fetch("http://127.0.0.1:3000/songs/");
@@ -31,13 +31,13 @@ const playMusic = (track, pause = false) => {
     play.src = "assets/pause.png";
   }
   document.querySelector(".currSonginfo").innerHTML = decodeURI(track); //using decodeURI to convert %20 to space
-  document.querySelector(".timer").innerHTML = "00:00/00:00";
+  document.querySelector(".timer").innerHTML = "00:00 / 00:00";
   // audio.play();
 };
 
 async function main() {
   //getting the songs
-  let audio_files = await getsongs();
+  audio_files = await getsongs();
   playMusic(audio_files[0], true);
   //console.log(audio_files);
 
@@ -81,22 +81,6 @@ async function main() {
     });
   });
 
-  //Attach event listener to play, previous & next buttons
-  document.querySelector("#play").addEventListener("click", () => {
-    if (currentSong.paused) {
-      currentSong.play();
-      play.src = "assets/pause.png";
-    } else {
-      currentSong.pause();
-      play.src = "assets/play.png";
-    }
-  });
-
-  document.querySelector("#previous").addEventListener("click", () => {
-    currentSong = new Audio();
-    currentSong.src = "/songs/" + audio_files[0];
-  });
-
   //listen to the timeupdate event
   currentSong.addEventListener("timeupdate", () => {
     let duration = currentSong.duration || 0;
@@ -121,11 +105,50 @@ async function main() {
 
     //add event listener to the progress bar
     document.querySelector(".seekbar").addEventListener("click", (e) => {
-      let seekTime = (e.offsetX / e.target.getBoundingClientRect().width) * duration;
+      let seekTime =
+        (e.offsetX / e.target.getBoundingClientRect().width) * duration;
 
-      document.querySelector(".progress").style.left = (seekTime / duration) * 100 + "%";
+      document.querySelector(".progress").style.left =
+        (seekTime / duration) * 100 + "%";
       currentSong.currentTime = seekTime;
     });
+  });
+
+  //add an event listener to the hamburger
+  document.querySelector(".hamburger").addEventListener("click", () => {
+    document.querySelector(".left").style.left = "0";
+  });
+
+  //add an event listener to the close button
+  document.querySelector(".close").addEventListener("click", () => {
+    document.querySelector(".left").style.left = "-100%";
+  });
+  //Attach event listener to play
+  document.querySelector("#play").addEventListener("click", () => {
+    if (currentSong.paused) {
+      currentSong.play();
+      play.src = "assets/pause.png";
+    } else {
+      currentSong.pause();
+      play.src = "assets/play.png";
+    }
+  });
+  // Add event listener to the previous button
+  previous.addEventListener("click", () => {
+    currentIndex = audio_files.indexOf(currentSong.src.split("/songs/")[1]);
+    if((currentIndex-1)>=0){
+      playMusic(audio_files[currentIndex-1]);
+    }
+  });
+
+  next.addEventListener("click", () => {
+    currentIndex = audio_files.indexOf(currentSong.src.split("/songs/")[1]);
+    if (currentIndex + 1 < audio_files.length) {
+      playMusic(audio_files[currentIndex + 1]);
+      currentIndex++;
+    } else {
+      playMusic(audio_files[currentIndex]);
+    }
   });
 }
 main();
