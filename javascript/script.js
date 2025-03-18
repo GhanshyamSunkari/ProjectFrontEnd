@@ -6,7 +6,7 @@ let currFolder;
 //get the songs from the server and return the array of songs
 async function getsongs(folder) {
   currFolder = folder;
-  let response = await fetch(`http://127.0.0.1:3000/${folder}/`);
+  let response = await fetch(`https://github.com/GhanshyamSunkari/ProjectFrontEnd/tree/main/${folder}/`);
   let text = await response.text();
   //   console.log(text);
 
@@ -82,7 +82,7 @@ const playMusic = (track, pause = false) => {
 };
 
 async function displayAlbums() {
-  let response = await fetch(`http://127.0.0.1:3000/songs/`);
+  let response = await fetch(`https://github.com/GhanshyamSunkari/ProjectFrontEnd/tree/main/songs/`);
   let text = await response.text();
   //   console.log(text);
 
@@ -100,7 +100,7 @@ async function displayAlbums() {
       folder = e.href.split("/").slice(-2)[0];
       //Get the meta data of the folder
       let response = await fetch(
-        `http://127.0.0.1:3000/songs/${folder}/info.json`
+        `https://github.com/GhanshyamSunkari/ProjectFrontEnd/tree/main/songs/${folder}/info.json`
       );
       let json = await response.json();
       //console.log(json);
@@ -131,7 +131,7 @@ async function displayAlbums() {
 
 async function main() {
   //get the list of all songs
-  await getsongs("songs/hanuman");
+  await getsongs("songs/Hanuman");
   playMusic(audio_files[0], true);
   //console.log(audio_files);
 
