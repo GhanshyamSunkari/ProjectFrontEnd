@@ -129,20 +129,13 @@ async function main() {
   });
 
   currentSong.addEventListener("timeupdate", () => {
-    let progressBar = document.querySelector(".progress");
-    let seekBar = document.querySelector(".seekbar");
-    if (currentSong.duration) {
-      let progress = (currentSong.currentTime / currentSong.duration) * 100;
-      progressBar.style.width = `${progress}%`;
-      seekBar.value = progress;
-    }
+    let progress = (currentSong.currentTime / currentSong.duration) * 100;
+    document.querySelector(".progress").style.width = progress + "%";
   });
 
   document.querySelector(".seekbar").addEventListener("input", (e) => {
     let seekTime = (e.target.value / 100) * currentSong.duration;
-    if (!isNaN(seekTime)) {
-      currentSong.currentTime = seekTime;
-    }
+    currentSong.currentTime = seekTime;
   });
 
   document.querySelector(".volume>img").addEventListener("click", (e) => {
@@ -164,8 +157,11 @@ async function main() {
   });
 
   document.querySelector(".hamburger").addEventListener("click", () => {
-    let menu = document.querySelector(".sidebar");
-    menu.classList.toggle("active");
+    document.querySelector(".left").style.left = "0";
+  });
+
+  document.querySelector(".close").addEventListener("click", () => {
+    document.querySelector(".left").style.left = "-100%";
   });
 }
 
