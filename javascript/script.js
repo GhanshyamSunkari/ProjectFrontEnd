@@ -128,9 +128,13 @@ async function main() {
     }
   });
 
-  document.querySelector(".seekbar").addEventListener("click", (e) => {
-    let duration = currentSong.duration;
-    let seekTime = (e.offsetX / e.target.getBoundingClientRect().width) * duration;
+  currentSong.addEventListener("timeupdate", () => {
+    let progress = (currentSong.currentTime / currentSong.duration) * 100;
+    document.querySelector(".progress").style.width = progress + "%";
+  });
+
+  document.querySelector(".seekbar").addEventListener("input", (e) => {
+    let seekTime = (e.target.value / 100) * currentSong.duration;
     currentSong.currentTime = seekTime;
   });
 
@@ -147,8 +151,8 @@ async function main() {
     }
   });
 
-  document.querySelector(".range input").addEventListener("change", (e) => {
-    currentSong.volume = parseInt(e.target.value) / 100;
+  document.querySelector(".range input").addEventListener("input", (e) => {
+    currentSong.volume = parseFloat(e.target.value) / 100;
     lastVolume = currentSong.volume;
   });
 
