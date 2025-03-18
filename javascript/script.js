@@ -129,13 +129,23 @@ async function main() {
   });
 
   currentSong.addEventListener("timeupdate", () => {
+    let progressBar = document.querySelector(".progress");
+    let seekBar = document.querySelector(".seekbar");
     let progress = (currentSong.currentTime / currentSong.duration) * 100;
-    document.querySelector(".progress").style.width = progress + "%";
+    progressBar.style.left = progress + "%";
+    seekBar.value = progress;
   });
 
   document.querySelector(".seekbar").addEventListener("input", (e) => {
     let seekTime = (e.target.value / 100) * currentSong.duration;
     currentSong.currentTime = seekTime;
+  });
+
+  document.querySelector(".seekbar").addEventListener("click", (e) => {
+    let rect = e.target.getBoundingClientRect();
+    let clickPosition = e.clientX - rect.left;
+    let percentage = (clickPosition / rect.width) * 100;
+    currentSong.currentTime = (percentage / 100) * currentSong.duration;
   });
 
   document.querySelector(".volume>img").addEventListener("click", (e) => {
