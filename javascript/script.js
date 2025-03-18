@@ -138,6 +138,7 @@ async function main() {
 });
 
 
+//hello
   document.querySelector(".seekbar").addEventListener("input", (e) => {
     let seekTime = (e.target.value / 100) * currentSong.duration;
     currentSong.currentTime = seekTime;
