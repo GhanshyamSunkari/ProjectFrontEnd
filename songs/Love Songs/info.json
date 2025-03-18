@@ -1,4 +1,8 @@
 {
     "title":"Love Playlist",
-    "description":"Vibe with Love"
+    "description":"Vibe with Love",
+    "songs":["01 - Maguva Maguva - SenSongsMp3.Co.mp3","01 - Nee Kannu Neeli Samudram -SenSongsMp3.Co.mp3",
+    "Baguntundi.mp3","Choosi Chudangane - SenSongsMp3.Co.mp3","Leharaayi.mp3","Maate Vinadhuga - SenSongsMp3.Co.mp3",
+    "Neeli Neeli Aakasam - SenSongsMp3.Co.mp3","Teliyade Teliyade - SenSongsMp3.Com.mp3","Tharagathi Pathos - SenSongsMp3.Com.mp3","Ye Kannulu Choodani - SenSongsMp3.Com"
+    ]
 }
