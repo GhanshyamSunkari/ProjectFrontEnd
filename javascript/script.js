@@ -128,18 +128,24 @@ async function main() {
     }
   });
 
+  currentSong.addEventListener("loadedmetadata", () => {
+    document.querySelector(".seekbar").max = 100;
+  });
+
   currentSong.addEventListener("timeupdate", () => {
     let progressBar = document.querySelector(".progress");
     let seekBar = document.querySelector(".seekbar");
     let progress = (currentSong.currentTime / currentSong.duration) * 100;
-    
-    progressBar.style.transform = `translateX(${progress}%)`; // Use transform for smoother movement
+    progressBar.style.transform = `translateX(${progress}%)`;
     seekBar.value = progress;
-});
+  });
 
-
-//hello
   document.querySelector(".seekbar").addEventListener("input", (e) => {
+    let seekTime = (e.target.value / 100) * currentSong.duration;
+    currentSong.currentTime = seekTime;
+  });
+
+  document.querySelector(".seekbar").addEventListener("change", (e) => {
     let seekTime = (e.target.value / 100) * currentSong.duration;
     currentSong.currentTime = seekTime;
   });
