@@ -136,7 +136,18 @@ async function main() {
   document.querySelector(".seekbar").addEventListener("input", (e) => {
     let seekTime = (e.target.value / 100) * currentSong.duration;
     currentSong.currentTime = seekTime;
-  });
+});
+
+// ✅ Also, add a "click" event listener like in the offline version
+document.querySelector(".seekbar").addEventListener("click", (e) => {
+    let seekbar = e.target.getBoundingClientRect();
+    let clickPosition = e.clientX - seekbar.left; // Get clicked position
+    let seekTime = (clickPosition / seekbar.width) * currentSong.duration;
+
+    currentSong.currentTime = seekTime;
+    document.querySelector(".progress").style.width = (seekTime / currentSong.duration) * 100 + "%";
+});
+
 
   document.querySelector(".volume>img").addEventListener("click", (e) => {
     if (currentSong.volume > 0) {
