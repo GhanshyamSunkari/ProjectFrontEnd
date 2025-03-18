@@ -1,6 +1,7 @@
 let currentSong = new Audio();
 let audio_files = [];
 let currFolder;
+let lastVolume = 0.5; // Default volume
 
 // ✅ Function to get songs from an album's `info.json`
 async function getsongs(folder) {
@@ -61,34 +62,34 @@ async function displayAlbums() {
   cardContainer.innerHTML = "";
 
   try {
-    // Fetch album list from `albums.json`
     let response = await fetch("https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json");
     if (!response.ok) throw new Error("Failed to fetch album list.");
-
-    let { albums } = await response.json(); // Extract albums array
+    let { albums } = await response.json();
 
     for (let folder of albums) {
-      let res = await fetch(`https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/info.json`);
-      if (!res.ok) continue; // Skip if info.json is missing
-
-      let json = await res.json();
-      cardContainer.innerHTML += `
-        <div data-folder="${folder}" class="card">
-          <div class="playlogo">
-              <img src="assets/play.svg" alt="playbutton">
-          </div>
-          <img src="https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/cover.jpg" alt="cover">
-          <h4>${json.title}</h4>
-          <p>${json.description}</p>
-        </div>`;
+      try {
+        let res = await fetch(`https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/info.json`);
+        if (!res.ok) throw new Error(`Missing info.json for ${folder}`);
+        let json = await res.json();
+        cardContainer.innerHTML += `
+          <div data-folder="${folder}" class="card">
+            <div class="playlogo">
+                <img src="assets/play.svg" alt="playbutton">
+            </div>
+            <img src="https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/cover.jpg" alt="cover">
+            <h4>${json.title}</h4>
+            <p>${json.description}</p>
+          </div>`;
+      } catch (albumError) {
+        console.warn(albumError.message);
+      }
     }
-    
-    // Attach event listeners to album cards
+
     document.querySelectorAll(".card").forEach(e => {
       e.addEventListener("click", async (item) => {
         let folder = `songs/${item.currentTarget.dataset.folder}`;
         await getsongs(folder);
-        playMusic(audio_files[0]);
+        if (audio_files.length > 0) playMusic(audio_files[0]);
       });
     });
 
@@ -99,9 +100,7 @@ async function displayAlbums() {
 
 // ✅ Main function
 async function main() {
-  await displayAlbums(); // Display all available albums
-  
-  // ✅ Default: Load first album's songs if albums.json exists
+  await displayAlbums();
   let response = await fetch("https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json");
   if (response.ok) {
     let { albums } = await response.json();
@@ -111,7 +110,7 @@ async function main() {
     }
   }
 
-  // ✅ Add event listeners for player controls
+  // ✅ Player controls
   document.getElementById("play").addEventListener("click", () => {
     if (currentSong.paused) {
       currentSong.play();
@@ -123,25 +122,45 @@ async function main() {
   });
 
   document.getElementById("previous").addEventListener("click", () => {
-    let currentIndex = audio_files.indexOf(currentSong.src.split("/").pop());
+    let currentIndex = audio_files.indexOf(decodeURIComponent(currentSong.src.split("/").pop()));
     if (currentIndex > 0) {
       playMusic(audio_files[currentIndex - 1]);
     }
   });
 
   document.getElementById("next").addEventListener("click", () => {
-    let currentIndex = audio_files.indexOf(currentSong.src.split("/").pop());
+    let currentIndex = audio_files.indexOf(decodeURIComponent(currentSong.src.split("/").pop()));
     if (currentIndex < audio_files.length - 1) {
       playMusic(audio_files[currentIndex + 1]);
     }
   });
 
-  document.querySelector(".seekbar").addEventListener("click", (e) => {
-    let duration = currentSong.duration;
-    let seekTime = (e.offsetX / e.target.getBoundingClientRect().width) * duration;
-    currentSong.currentTime = seekTime;
+  // ✅ Seek bar updates
+  currentSong.addEventListener("timeupdate", () => {
+    let duration = currentSong.duration || 0;
+    let currentTime = currentSong.currentTime || 0;
+    if (duration > 0) {
+      let formatTime = (time) => (time < 10 ? `0${time}` : time);
+      document.querySelector(".timer").innerHTML = `${formatTime(Math.floor(currentTime / 60))}:${formatTime(Math.floor(currentTime % 60))} / ${formatTime(Math.floor(duration / 60))}:${formatTime(Math.floor(duration % 60))}`;
+      document.querySelector(".progress").style.left = (currentTime / duration) * 100 + "%";
+    }
   });
 
+  // ✅ Volume mute/unmute
+  document.querySelector(".volume>img").addEventListener("click", (e) => {
+    if (e.target.src.includes("assets/volumeRocker.png")) {
+      lastVolume = currentSong.volume;
+      e.target.src = "assets/mute.png";
+      currentSong.volume = 0;
+      document.querySelector(".range input").value = 0;
+    } else {
+      e.target.src = "assets/volumeRocker.png";
+      currentSong.volume = lastVolume;
+      document.querySelector(".range input").value = lastVolume * 100;
+    }
+  });
+
+  // ✅ Mobile menu controls
   document.querySelector(".hamburger").addEventListener("click", () => {
     document.querySelector(".left").style.left = "0";
   });
