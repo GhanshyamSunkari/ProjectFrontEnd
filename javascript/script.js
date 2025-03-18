@@ -132,7 +132,7 @@ async function main() {
     let progressBar = document.querySelector(".progress");
     let seekBar = document.querySelector(".seekbar");
     let progress = (currentSong.currentTime / currentSong.duration) * 100;
-    progressBar.style.left = progress + "%";
+    progressBar.style.transform = `translateX(${progress}%)`;
     seekBar.value = progress;
   });
 
