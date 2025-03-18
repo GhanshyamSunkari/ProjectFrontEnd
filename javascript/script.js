@@ -128,26 +128,21 @@ async function main() {
     }
   });
 
-  currentSong.addEventListener("loadedmetadata", () => {
-    document.querySelector(".seekbar").max = 100;
-  });
-
   currentSong.addEventListener("timeupdate", () => {
     let progressBar = document.querySelector(".progress");
     let seekBar = document.querySelector(".seekbar");
-    let progress = (currentSong.currentTime / currentSong.duration) * 100;
-    progressBar.style.transform = `translateX(${progress}%)`;
-    seekBar.value = progress;
+    if (currentSong.duration) {
+      let progress = (currentSong.currentTime / currentSong.duration) * 100;
+      progressBar.style.width = `${progress}%`;
+      seekBar.value = progress;
+    }
   });
 
   document.querySelector(".seekbar").addEventListener("input", (e) => {
     let seekTime = (e.target.value / 100) * currentSong.duration;
-    currentSong.currentTime = seekTime;
-  });
-
-  document.querySelector(".seekbar").addEventListener("change", (e) => {
-    let seekTime = (e.target.value / 100) * currentSong.duration;
-    currentSong.currentTime = seekTime;
+    if (!isNaN(seekTime)) {
+      currentSong.currentTime = seekTime;
+    }
   });
 
   document.querySelector(".volume>img").addEventListener("click", (e) => {
@@ -166,6 +161,11 @@ async function main() {
   document.querySelector(".range input").addEventListener("input", (e) => {
     currentSong.volume = parseFloat(e.target.value) / 100;
     lastVolume = currentSong.volume;
+  });
+
+  document.querySelector(".hamburger").addEventListener("click", () => {
+    let menu = document.querySelector(".sidebar");
+    menu.classList.toggle("active");
   });
 }
 
