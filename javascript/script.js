@@ -6,18 +6,20 @@ let lastVolume = 1; // Store last volume before mute
 // ✅ Function to get songs from an album's `info.json`
 async function getsongs(folder) {
   currFolder = folder;
-  
+
   try {
-    let response = await fetch(`https://ghanshyamsunkari.github.io/ProjectFrontEnd/${folder}/info.json`);
+    let response = await fetch(
+      `https://ghanshyamsunkari.github.io/ProjectFrontEnd/${folder}/info.json`
+    );
     if (!response.ok) throw new Error("Failed to fetch song list.");
-    
+
     let json = await response.json();
     audio_files = json.songs;
 
     let songUL = document.querySelector(".songsList ul");
     songUL.innerHTML = "";
-    
-    audio_files.forEach(song => {
+
+    audio_files.forEach((song) => {
       songUL.innerHTML += `
         <li>
           <img class="invert" src="assets/music.svg" alt="musiclogo">
@@ -44,13 +46,14 @@ async function getsongs(folder) {
 
 // ✅ Function to play a selected song
 const playMusic = (track, pause = false) => {
-  currentSong.src = `https://ghanshyamsunkari.github.io/ProjectFrontEnd/${currFolder}/` + track;
-  
+  currentSong.src =
+    `https://ghanshyamsunkari.github.io/ProjectFrontEnd/${currFolder}/` + track;
+
   if (!pause) {
     currentSong.play();
     document.getElementById("play").src = "assets/pause.png";
   }
-  
+
   document.querySelector(".currSonginfo").innerHTML = decodeURI(track);
 };
 
@@ -60,12 +63,16 @@ async function displayAlbums() {
   cardContainer.innerHTML = "";
 
   try {
-    let response = await fetch("https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json");
+    let response = await fetch(
+      "https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json"
+    );
     if (!response.ok) throw new Error("Failed to fetch album list.");
-    
+
     let { albums } = await response.json();
     for (let folder of albums) {
-      let res = await fetch(`https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/info.json`);
+      let res = await fetch(
+        `https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/info.json`
+      );
       if (!res.ok) continue;
       let json = await res.json();
       cardContainer.innerHTML += `
@@ -78,8 +85,8 @@ async function displayAlbums() {
           <p>${json.description}</p>
         </div>`;
     }
-    
-    document.querySelectorAll(".card").forEach(e => {
+
+    document.querySelectorAll(".card").forEach((e) => {
       e.addEventListener("click", async (item) => {
         let folder = `songs/${item.currentTarget.dataset.folder}`;
         await getsongs(folder);
@@ -94,8 +101,10 @@ async function displayAlbums() {
 // ✅ Main function
 async function main() {
   await displayAlbums();
-  
-  let response = await fetch("https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json");
+
+  let response = await fetch(
+    "https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json"
+  );
   if (response.ok) {
     let { albums } = await response.json();
     if (albums.length > 0) {
@@ -115,39 +124,36 @@ async function main() {
   });
 
   document.getElementById("previous").addEventListener("click", () => {
-    let currentIndex = audio_files.indexOf(decodeURIComponent(currentSong.src.split("/").pop()));
+    let currentIndex = audio_files.indexOf(
+      decodeURIComponent(currentSong.src.split("/").pop())
+    );
     if (currentIndex > 0) {
       playMusic(audio_files[currentIndex - 1]);
     }
   });
 
   document.getElementById("next").addEventListener("click", () => {
-    let currentIndex = audio_files.indexOf(decodeURIComponent(currentSong.src.split("/").pop()));
+    let currentIndex = audio_files.indexOf(
+      decodeURIComponent(currentSong.src.split("/").pop())
+    );
     if (currentIndex < audio_files.length - 1) {
       playMusic(audio_files[currentIndex + 1]);
     }
   });
 
   currentSong.addEventListener("timeupdate", () => {
-    let progress = (currentSong.currentTime / currentSong.duration) * 100;
-    document.querySelector(".progress").style.width = progress + "%";
+    document.querySelector(".progress").style.left =
+      (currentTime / duration) * 100 + "%";
   });
+  //add event listener to the progress bar
+  document.querySelector(".seekbar").addEventListener("click", (e) => {
+    let seekTime =
+      (e.offsetX / e.target.getBoundingClientRect().width) * duration;
 
-  document.querySelector(".seekbar").addEventListener("input", (e) => {
-    let seekTime = (e.target.value / 100) * currentSong.duration;
+    document.querySelector(".progress").style.left =
+      (seekTime / duration) * 100 + "%";
     currentSong.currentTime = seekTime;
-});
-
-// ✅ Also, add a "click" event listener like in the offline version
-document.querySelector(".seekbar").addEventListener("click", (e) => {
-    let seekbar = e.target.getBoundingClientRect();
-    let clickPosition = e.clientX - seekbar.left; // Get clicked position
-    let seekTime = (clickPosition / seekbar.width) * currentSong.duration;
-
-    currentSong.currentTime = seekTime;
-    document.querySelector(".progress").style.width = (seekTime / currentSong.duration) * 100 + "%";
-});
-
+  });
 
   document.querySelector(".volume>img").addEventListener("click", (e) => {
     if (currentSong.volume > 0) {
