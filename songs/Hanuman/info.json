@@ -1,4 +1,7 @@
 {
     "title":"Hanuman Songs",
-    "description":"Devotional"
+    "description":"Devotional",
+    "songs":[
+        "Anjanadri Theme Song.mp3","Hanuman Chalisa.mp3","Shiva Shiva Shankara.mp3"
+    ]
 }
