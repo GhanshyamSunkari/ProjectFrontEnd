@@ -141,17 +141,16 @@ async function main() {
     }
   });
 
+  // ✅ Update the seekbar as the song plays
   currentSong.addEventListener("timeupdate", () => {
-    document.querySelector(".progress").style.left =
-      (currentTime / duration) * 100 + "%";
+    let progress = (currentSong.currentTime / currentSong.duration) * 100;
+    document.querySelector(".progress").style.left = `${progress}%`;
   });
-  //add event listener to the progress bar
+
+  // ✅ Allow user to click on the seekbar to jump to a different part of the song
   document.querySelector(".seekbar").addEventListener("click", (e) => {
     let seekTime =
-      (e.offsetX / e.target.getBoundingClientRect().width) * duration;
-
-    document.querySelector(".progress").style.left =
-      (seekTime / duration) * 100 + "%";
+      (e.offsetX / e.target.getBoundingClientRect().width) * currentSong.duration;
     currentSong.currentTime = seekTime;
   });
 
