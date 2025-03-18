@@ -1,7 +1,7 @@
 let currentSong = new Audio();
 let audio_files = [];
 let currFolder;
-let lastVolume = 0.5; // Default volume
+let lastVolume = 1; // Store last volume before mute
 
 // ✅ Function to get songs from an album's `info.json`
 async function getsongs(folder) {
@@ -37,7 +37,6 @@ async function getsongs(folder) {
         playMusic(audio_files[index]);
       });
     });
-
   } catch (error) {
     console.error("Error loading songs:", error);
   }
@@ -53,7 +52,6 @@ const playMusic = (track, pause = false) => {
   }
   
   document.querySelector(".currSonginfo").innerHTML = decodeURI(track);
-  document.querySelector(".timer").innerHTML = "00:00 / 00:00";
 };
 
 // ✅ Function to display albums dynamically
@@ -64,35 +62,30 @@ async function displayAlbums() {
   try {
     let response = await fetch("https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json");
     if (!response.ok) throw new Error("Failed to fetch album list.");
+    
     let { albums } = await response.json();
-
     for (let folder of albums) {
-      try {
-        let res = await fetch(`https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/info.json`);
-        if (!res.ok) throw new Error(`Missing info.json for ${folder}`);
-        let json = await res.json();
-        cardContainer.innerHTML += `
-          <div data-folder="${folder}" class="card">
-            <div class="playlogo">
-                <img src="assets/play.svg" alt="playbutton">
-            </div>
-            <img src="https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/cover.jpg" alt="cover">
-            <h4>${json.title}</h4>
-            <p>${json.description}</p>
-          </div>`;
-      } catch (albumError) {
-        console.warn(albumError.message);
-      }
+      let res = await fetch(`https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/info.json`);
+      if (!res.ok) continue;
+      let json = await res.json();
+      cardContainer.innerHTML += `
+        <div data-folder="${folder}" class="card">
+          <div class="playlogo">
+              <img src="assets/play.svg" alt="playbutton">
+          </div>
+          <img src="https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/${folder}/cover.jpg" alt="cover">
+          <h4>${json.title}</h4>
+          <p>${json.description}</p>
+        </div>`;
     }
-
+    
     document.querySelectorAll(".card").forEach(e => {
       e.addEventListener("click", async (item) => {
         let folder = `songs/${item.currentTarget.dataset.folder}`;
         await getsongs(folder);
-        if (audio_files.length > 0) playMusic(audio_files[0]);
+        playMusic(audio_files[0]);
       });
     });
-
   } catch (error) {
     console.error("Error loading albums:", error);
   }
@@ -101,6 +94,7 @@ async function displayAlbums() {
 // ✅ Main function
 async function main() {
   await displayAlbums();
+  
   let response = await fetch("https://ghanshyamsunkari.github.io/ProjectFrontEnd/songs/albums.json");
   if (response.ok) {
     let { albums } = await response.json();
@@ -110,7 +104,6 @@ async function main() {
     }
   }
 
-  // ✅ Player controls
   document.getElementById("play").addEventListener("click", () => {
     if (currentSong.paused) {
       currentSong.play();
@@ -135,32 +128,30 @@ async function main() {
     }
   });
 
-  // ✅ Seek bar updates
-  currentSong.addEventListener("timeupdate", () => {
-    let duration = currentSong.duration || 0;
-    let currentTime = currentSong.currentTime || 0;
-    if (duration > 0) {
-      let formatTime = (time) => (time < 10 ? `0${time}` : time);
-      document.querySelector(".timer").innerHTML = `${formatTime(Math.floor(currentTime / 60))}:${formatTime(Math.floor(currentTime % 60))} / ${formatTime(Math.floor(duration / 60))}:${formatTime(Math.floor(duration % 60))}`;
-      document.querySelector(".progress").style.left = (currentTime / duration) * 100 + "%";
-    }
+  document.querySelector(".seekbar").addEventListener("click", (e) => {
+    let duration = currentSong.duration;
+    let seekTime = (e.offsetX / e.target.getBoundingClientRect().width) * duration;
+    currentSong.currentTime = seekTime;
   });
 
-  // ✅ Volume mute/unmute
   document.querySelector(".volume>img").addEventListener("click", (e) => {
-    if (e.target.src.includes("assets/volumeRocker.png")) {
+    if (currentSong.volume > 0) {
       lastVolume = currentSong.volume;
-      e.target.src = "assets/mute.png";
       currentSong.volume = 0;
+      e.target.src = "assets/mute.png";
       document.querySelector(".range input").value = 0;
     } else {
-      e.target.src = "assets/volumeRocker.png";
       currentSong.volume = lastVolume;
+      e.target.src = "assets/volumeRocker.png";
       document.querySelector(".range input").value = lastVolume * 100;
     }
   });
 
-  // ✅ Mobile menu controls
+  document.querySelector(".range input").addEventListener("change", (e) => {
+    currentSong.volume = parseInt(e.target.value) / 100;
+    lastVolume = currentSong.volume;
+  });
+
   document.querySelector(".hamburger").addEventListener("click", () => {
     document.querySelector(".left").style.left = "0";
   });
@@ -170,5 +161,4 @@ async function main() {
   });
 }
 
-// ✅ Run the script
 main();
